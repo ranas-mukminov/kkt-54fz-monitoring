@@ -1,0 +1,32 @@
+server:
+  port: 9090
+  metrics_path: /metrics
+  api_path: /api/v1
+
+collectors:
+  file_log:
+    enabled: true
+    path: /var/log/kkt/*.log
+    format: json
+    poll_interval: 10s
+  
+  http_ofd:
+    enabled: false
+    url: https://ofd.example.ru/api/v1
+    api_key: ${OFD_API_KEY}
+    poll_interval: 30s
+    timeout: 10s
+
+ai:
+  provider: mock  # Options: mock, openai, anthropic
+  error_clustering:
+    enabled: true
+    min_cluster_size: 5
+    similarity_threshold: 0.7
+  alert_advisor:
+    enabled: true
+    lookback_period: 168h  # 7 days
+
+logging:
+  level: info  # Options: debug, info, warn, error
+  format: json  # Options: json, text
