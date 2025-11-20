@@ -1,0 +1,205 @@
+{
+  "dashboard": {
+    "title": "KKT 54-FZ Monitoring",
+    "tags": ["kkt", "fiscal", "monitoring"],
+    "timezone": "browser",
+    "schemaVersion": 16,
+    "version": 1,
+    "refresh": "30s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "KKT Status Overview",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0},
+        "targets": [
+          {
+            "expr": "kkt_status",
+            "legendFormat": "{{ kkt_id }}"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "orientation": "auto",
+          "textMode": "value_and_name",
+          "colorMode": "value",
+          "graphMode": "none"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [
+              {"value": 0, "text": "Unavailable", "color": "red"},
+              {"value": 1, "text": "Running", "color": "green"},
+              {"value": 2, "text": "Error", "color": "orange"}
+            ]
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "Total Documents Processed",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 6, "y": 0},
+        "targets": [
+          {
+            "expr": "sum(kkt_documents_total)",
+            "legendFormat": "Total"
+          }
+        ],
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area"
+        }
+      },
+      {
+        "id": 3,
+        "title": "OFD Sync Status",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 12, "y": 0},
+        "targets": [
+          {
+            "expr": "kkt_ofd_sync_status",
+            "legendFormat": "{{ kkt_id }}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [
+              {"value": 0, "text": "Unknown", "color": "gray"},
+              {"value": 1, "text": "Synced", "color": "green"},
+              {"value": 2, "text": "Pending", "color": "yellow"},
+              {"value": 3, "text": "Error", "color": "red"}
+            ]
+          }
+        }
+      },
+      {
+        "id": 4,
+        "title": "Fiscal Drive Memory Usage",
+        "type": "gauge",
+        "gridPos": {"h": 4, "w": 6, "x": 18, "y": 0},
+        "targets": [
+          {
+            "expr": "kkt_fd_memory_usage_percent",
+            "legendFormat": "{{ kkt_id }}"
+          }
+        ],
+        "options": {
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "steps": [
+                {"value": 0, "color": "green"},
+                {"value": 70, "color": "yellow"},
+                {"value": 90, "color": "red"}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 5,
+        "title": "Documents Per Hour",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4},
+        "targets": [
+          {
+            "expr": "kkt_documents_per_hour",
+            "legendFormat": "{{ kkt_id }}"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Documents/Hour"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Errors by Type",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4},
+        "targets": [
+          {
+            "expr": "rate(kkt_errors_total[5m])",
+            "legendFormat": "{{ kkt_id }} - {{ error_type }}"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Errors/Second"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Average OFD Sync Time",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12},
+        "targets": [
+          {
+            "expr": "kkt_average_sync_time_seconds",
+            "legendFormat": "{{ kkt_id }}"
+          }
+        ],
+        "yaxes": [
+          {"format": "s", "label": "Seconds"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Shift Status",
+        "type": "stat",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 12},
+        "targets": [
+          {
+            "expr": "kkt_shift_status",
+            "legendFormat": "{{ kkt_id }}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [
+              {"value": 0, "text": "Closed", "color": "blue"},
+              {"value": 1, "text": "Open", "color": "green"}
+            ]
+          }
+        }
+      },
+      {
+        "id": 9,
+        "title": "Last Document Time",
+        "type": "table",
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 20},
+        "targets": [
+          {
+            "expr": "kkt_last_document_timestamp",
+            "format": "table",
+            "instant": true
+          }
+        ],
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {},
+              "indexByName": {},
+              "renameByName": {
+                "kkt_id": "KKT ID",
+                "Value": "Last Document (Unix Time)"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

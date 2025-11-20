@@ -1,0 +1,47 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+/kkt-monitor
+/cmd/kkt-monitor/kkt-monitor
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+coverage.txt
+coverage.html
+
+# Dependency directories
+vendor/
+
+# Go workspace file
+go.work
+
+# IDE-specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment and configuration
+.env
+*.local.yaml
+*.local.yml
+
+# Temporary files
+/tmp/
+*.tmp
+
+# Logs
+*.log
+logs/
+
+# Build artifacts
+/dist/
+/build/

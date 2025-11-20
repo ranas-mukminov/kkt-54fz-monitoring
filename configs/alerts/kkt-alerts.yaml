@@ -1,0 +1,114 @@
+groups:
+  - name: kkt_alerts
+    interval: 30s
+    rules:
+      # Critical Alerts
+      - alert: KKTUnavailable
+        expr: kkt_status == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "KKT device {{ $labels.kkt_id }} is unavailable"
+          description: "KKT device {{ $labels.kkt_id }} has been unavailable for more than 5 minutes. Immediate attention required."
+
+      - alert: FiscalDriveCriticalError
+        expr: kkt_errors_total{error_type="fiscal_drive"} > 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Critical fiscal drive error on {{ $labels.kkt_id }}"
+          description: "Fiscal drive error detected on KKT {{ $labels.kkt_id }}. This may violate fiscal compliance requirements."
+
+      - alert: FiscalDriveMemoryFull
+        expr: kkt_fd_memory_usage_percent >= 95
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Fiscal drive memory almost full on {{ $labels.kkt_id }}"
+          description: "Fiscal drive memory usage on {{ $labels.kkt_id }} is {{ $value }}%. Immediate replacement required."
+
+      # High Priority Alerts
+      - alert: OFDSyncFailure
+        expr: kkt_ofd_sync_status == 3
+        for: 10m
+        labels:
+          severity: high
+        annotations:
+          summary: "OFD synchronization failure on {{ $labels.kkt_id }}"
+          description: "KKT {{ $labels.kkt_id }} failed to synchronize with OFD for 10 minutes. This may lead to compliance violations."
+
+      - alert: FiscalDriveMemoryHigh
+        expr: kkt_fd_memory_usage_percent >= 80 and kkt_fd_memory_usage_percent < 95
+        for: 1h
+        labels:
+          severity: high
+        annotations:
+          summary: "Fiscal drive memory high on {{ $labels.kkt_id }}"
+          description: "Fiscal drive memory usage on {{ $labels.kkt_id }} is {{ $value }}%. Plan for replacement soon."
+
+      - alert: KKTErrorRate
+        expr: rate(kkt_errors_total[5m]) > 0.1
+        for: 15m
+        labels:
+          severity: high
+        annotations:
+          summary: "High error rate on {{ $labels.kkt_id }}"
+          description: "KKT {{ $labels.kkt_id }} is experiencing elevated error rates. Current rate: {{ $value }} errors/sec."
+
+      # Warning Alerts
+      - alert: OFDSyncDelayed
+        expr: kkt_ofd_sync_status == 2
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: "OFD synchronization delayed on {{ $labels.kkt_id }}"
+          description: "KKT {{ $labels.kkt_id }} has pending OFD synchronization for 30 minutes."
+
+      - alert: NoRecentDocuments
+        expr: (time() - kkt_last_document_timestamp) > 3600
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "No recent fiscal documents from {{ $labels.kkt_id }}"
+          description: "KKT {{ $labels.kkt_id }} has not generated any fiscal documents in the last hour. This may indicate an issue or no sales activity."
+
+      - alert: ShiftOpenTooLong
+        expr: kkt_shift_status == 1 and (time() - kkt_last_document_timestamp) > 86400
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "Shift open for too long on {{ $labels.kkt_id }}"
+          description: "KKT {{ $labels.kkt_id }} has had a shift open for more than 24 hours. Consider closing the shift."
+
+      - alert: LowDocumentRate
+        expr: kkt_documents_per_hour < 10
+        for: 2h
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low document processing rate on {{ $labels.kkt_id }}"
+          description: "KKT {{ $labels.kkt_id }} is processing documents at a rate of {{ $value }} per hour, which is below normal."
+
+      - alert: HighSyncTime
+        expr: kkt_average_sync_time_seconds > 10
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High OFD sync time on {{ $labels.kkt_id }}"
+          description: "OFD synchronization time for {{ $labels.kkt_id }} is {{ $value }} seconds on average. This may indicate network or OFD issues."
+
+      # Informational Alerts
+      - alert: KKTStatusChanged
+        expr: changes(kkt_status[5m]) > 0
+        labels:
+          severity: info
+        annotations:
+          summary: "KKT status changed for {{ $labels.kkt_id }}"
+          description: "Status of KKT {{ $labels.kkt_id }} has changed. Current status: {{ $value }}."

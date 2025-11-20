@@ -1,0 +1,179 @@
+# LEGAL COMPLIANCE AND REGULATORY INFORMATION
+
+## Federal Law 54-FZ Compliance
+
+This software is designed to monitor and analyze Cash Register Equipment (CRE/KKT) operating under Russian Federal Law No. 54-FZ dated May 22, 2003 "On the use of cash register equipment when making cash settlements and (or) settlements using payment cards" (as amended).
+
+### Regulatory Framework
+
+The system complies with the following regulations:
+
+1. **Federal Law No. 54-FZ** (dated 22.05.2003)
+   - On the use of cash register equipment
+   - Last amended: multiple amendments through 2023
+
+2. **Order of the Federal Tax Service No. MMV-7-20/229@** (dated 21.03.2017)
+   - On approval of additional requirements for cash register equipment
+   - Technical specifications for fiscal data operators (OFD)
+
+3. **Technical Requirements for Fiscal Document Formats**
+   - Format version 1.05 and higher
+   - JSON-based fiscal document structure
+   - Digital signature requirements
+
+### Monitoring Scope
+
+This monitoring system collects and analyzes:
+
+- KKT operational status
+- Fiscal document generation and transmission
+- OFD synchronization status
+- Fiscal drive (FN) status and capacity
+- Error and exception tracking
+- Compliance with fiscal data transmission timelines
+
+### Important Disclaimers
+
+⚠️ **DISCLAIMER**: This software is a MONITORING tool only. It does NOT:
+
+- Replace or modify fiscal registration functionality
+- Generate or modify fiscal documents
+- Interfere with the fiscal drive operation
+- Replace OFD (Fiscal Data Operator) services
+- Provide fiscal data storage compliance
+
+### Data Protection and Privacy
+
+#### Personal Data Processing
+
+This system may process personal data subject to:
+
+- Federal Law No. 152-FZ "On Personal Data" (dated 27.07.2006)
+- General Data Protection Regulation (GDPR) - for EU subjects
+
+**Important**: If you process personal data, you must:
+- Obtain proper consent from data subjects
+- Implement appropriate security measures
+- Register with regulatory authorities as required
+- Maintain data processing records
+- Implement data retention policies
+
+#### Fiscal Data
+
+Fiscal data collected by this system is subject to:
+- 5-year retention requirement (per 54-FZ)
+- Secure storage requirements
+- Access control and audit requirements
+- Encryption requirements for transmission
+
+### Compliance Responsibilities
+
+#### Operator Responsibilities
+
+The operator of this monitoring system is responsible for:
+
+1. **Proper Configuration**: Ensuring the system is correctly configured to monitor KKT equipment
+2. **Data Security**: Implementing appropriate security measures for collected data
+3. **Access Control**: Restricting access to authorized personnel only
+4. **Audit Trail**: Maintaining logs of system access and operations
+5. **Regular Updates**: Keeping the system updated with latest compliance requirements
+
+#### Limitations
+
+This software:
+- Does not guarantee 100% uptime or reliability
+- Is provided "AS IS" without warranties
+- Requires proper configuration and operation
+- Should be tested in non-production environments first
+- May require customization for specific use cases
+
+### Liability
+
+The authors and contributors of this software:
+- Are not liable for improper use or configuration
+- Are not responsible for regulatory compliance of end users
+- Do not provide legal or compliance advice
+- Recommend consulting with legal and compliance experts
+
+### Export Compliance
+
+This software uses cryptographic functionality. Users must ensure compliance with:
+- Export control regulations of their jurisdiction
+- Import regulations of deployment countries
+- Encryption usage regulations
+
+### Audit and Verification
+
+Organizations using this software should:
+- Conduct regular compliance audits
+- Verify metric accuracy and completeness
+- Test alert systems regularly
+- Document system configuration and changes
+- Maintain change management procedures
+
+### Changes to Regulations
+
+Federal Law 54-FZ and related regulations are subject to change. Users must:
+- Monitor regulatory changes
+- Update the system as needed
+- Consult with legal advisors
+- Implement required changes promptly
+
+### Contact for Compliance Questions
+
+For questions about compliance features:
+- Open an issue on GitHub: https://github.com/ranas-mukminov/kkt-54fz-monitoring/issues
+- Contact: support@run-as-daemon.ru
+
+**Note**: We provide technical support only. For legal and regulatory compliance advice, consult qualified legal professionals.
+
+## Third-Party Dependencies
+
+This software uses third-party libraries and components. See `go.mod` for a complete list of dependencies. Each dependency is subject to its own license terms.
+
+### Prometheus Client
+
+- License: Apache License 2.0
+- Usage: Metrics collection and export
+- https://github.com/prometheus/client_golang
+
+### Other Dependencies
+
+All dependencies are vetted for:
+- License compatibility
+- Security vulnerabilities
+- Maintenance status
+- Community support
+
+## Intellectual Property
+
+### Trademarks
+
+- "ККТ" (KKT) and related terms are general terms for cash register equipment
+- "ОФД" (OFD) refers to Fiscal Data Operators as defined by Russian law
+- This software is not affiliated with any specific KKT manufacturer or OFD provider
+
+### Patents
+
+This software implements publicly available technical specifications and does not knowingly infringe any patents.
+
+## Updates to This Document
+
+This LEGAL document may be updated to reflect:
+- Changes in regulations
+- New compliance requirements
+- Clarifications and corrections
+- Additional disclaimers
+
+Last updated: 2024-11-20
+
+## Acknowledgments
+
+This project respects and acknowledges:
+- Russian Federal Tax Service (ФНС России)
+- Technical committee work on 54-FZ implementation
+- Open source community contributions
+
+---
+
+**IMPORTANT**: This document provides information only and does not constitute legal advice. Consult with qualified legal and compliance professionals for your specific situation.
