@@ -96,8 +96,8 @@ func Load(path string) (*Config, error) {
 
 // Validate validates the configuration
 func (c *Config) Validate() error {
-	if c.Server.Port <= 0 || c.Server.Port > 65535 {
-		return fmt.Errorf("invalid server port: %d", c.Server.Port)
+	if c.Server.Port < 1024 || c.Server.Port > 65535 {
+		return fmt.Errorf("invalid server port: %d (must be between 1024 and 65535)", c.Server.Port)
 	}
 
 	if c.Server.MetricsPath == "" {

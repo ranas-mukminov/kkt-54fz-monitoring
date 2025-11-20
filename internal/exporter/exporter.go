@@ -19,7 +19,7 @@ type Exporter struct {
 	// Metrics
 	kktStatus           *prometheus.GaugeVec
 	kktDocumentsTotal   *prometheus.GaugeVec
-	kktErrorsTotal      *prometheus.CounterVec
+	kktErrorsTotal      *prometheus.GaugeVec
 	kktOFDSyncStatus    *prometheus.GaugeVec
 	kktShiftStatus      *prometheus.GaugeVec
 	kktLastDocumentTime *prometheus.GaugeVec
@@ -27,15 +27,13 @@ type Exporter struct {
 	kktDocumentsPerHour *prometheus.GaugeVec
 	kktAvgSyncTime      *prometheus.GaugeVec
 
-	mu            sync.RWMutex
-	metricsCache  map[string]domain.Metrics
+	mu sync.RWMutex
 }
 
 // New creates a new Prometheus exporter
 func New(log *logger.Logger) *Exporter {
 	e := &Exporter{
-		log:          log,
-		metricsCache: make(map[string]domain.Metrics),
+		log: log,
 	}
 
 	e.initMetrics()
@@ -62,8 +60,8 @@ func (e *Exporter) initMetrics() {
 		[]string{"kkt_id"},
 	)
 
-	e.kktErrorsTotal = prometheus.NewCounterVec(
-		prometheus.CounterOpts{
+	e.kktErrorsTotal = prometheus.NewGaugeVec(
+		prometheus.GaugeOpts{
 			Name: "kkt_errors_total",
 			Help: "Total number of errors by type",
 		},
@@ -137,8 +135,7 @@ func (e *Exporter) registerMetrics() {
 // UpdateMetrics updates metrics from domain.Metrics
 func (e *Exporter) UpdateMetrics(metrics domain.Metrics) {
 	e.mu.Lock()
-	e.metricsCache[metrics.KKTID] = metrics
-	e.mu.Unlock()
+	defer e.mu.Unlock()
 
 	e.kktStatus.WithLabelValues(metrics.KKTID).Set(float64(metrics.Status))
 	e.kktDocumentsTotal.WithLabelValues(metrics.KKTID).Set(float64(metrics.DocumentsTotal))
@@ -149,9 +146,9 @@ func (e *Exporter) UpdateMetrics(metrics domain.Metrics) {
 	e.kktDocumentsPerHour.WithLabelValues(metrics.KKTID).Set(metrics.DocumentsPerHour)
 	e.kktAvgSyncTime.WithLabelValues(metrics.KKTID).Set(metrics.AverageSyncTime)
 
-	// Update error counters
+	// Update error gauges with current counts
 	for errorType, count := range metrics.ErrorsByType {
-		e.kktErrorsTotal.WithLabelValues(metrics.KKTID, errorTypeName(errorType)).Add(float64(count))
+		e.kktErrorsTotal.WithLabelValues(metrics.KKTID, errorTypeName(errorType)).Set(float64(count))
 	}
 }
 

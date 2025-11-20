@@ -1,6 +1,8 @@
 module github.com/ranas-mukminov/kkt-54fz-monitoring
 
-go 1.24.10
+go 1.23.0
+
+toolchain go1.24.10
 
 require (
 	github.com/prometheus/client_golang v1.23.2

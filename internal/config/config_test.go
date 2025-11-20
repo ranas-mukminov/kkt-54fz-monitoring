@@ -102,7 +102,16 @@ func TestValidate(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "invalid port",
+			name: "invalid port - too low",
+			cfg: Config{
+				Server: ServerConfig{
+					Port: 80,
+				},
+			},
+			wantErr: true,
+		},
+		{
+			name: "invalid port - negative",
 			cfg: Config{
 				Server: ServerConfig{
 					Port: -1,
