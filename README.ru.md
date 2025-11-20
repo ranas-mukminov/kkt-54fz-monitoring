@@ -1,7 +1,7 @@
 # KKT 54-ФЗ Мониторинг
 
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
-![Go Version](https://img.shields.io/badge/Go-1.21+-00ADD8?logo=go)
+![Go Version](https://img.shields.io/badge/Go-1.23+-00ADD8?logo=go)
 
 Система мониторинга контрольно-кассовой техники (ККТ) в соответствии с Федеральным законом 54-ФЗ "О применении контрольно-кассовой техники".
 

@@ -1,7 +1,7 @@
 # KKT 54-FZ Monitoring
 
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
-![Go Version](https://img.shields.io/badge/Go-1.21+-00ADD8?logo=go)
+![Go Version](https://img.shields.io/badge/Go-1.23+-00ADD8?logo=go)
 
 A comprehensive monitoring system for Cash Register Equipment (KKT) compliant with Russian Federal Law 54-FZ "On the use of cash register equipment".
 
