@@ -147,7 +147,7 @@ Pre-configured alert rules are in `configs/alerts/kkt-alerts.yaml`:
 
 ### Requirements
 
-- Go 1.21+
+- Go 1.23+
 - Make
 - Docker and Docker Compose (for local development)
 

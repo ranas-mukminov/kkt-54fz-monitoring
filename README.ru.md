@@ -147,7 +147,7 @@ logging:
 
 ### Требования
 
-- Go 1.21+
+- Go 1.23+
 - Make
 - Docker и Docker Compose (для локальной разработки)
 

@@ -57,7 +57,7 @@ For feature requests:
 
 ### Prerequisites
 
-- Go 1.21 or higher
+- Go 1.23 or higher
 - Make
 - Docker and Docker Compose (optional)
 
